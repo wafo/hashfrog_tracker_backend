@@ -5,14 +5,20 @@ services:
     image: redis:alpine
     container_name: ${INSTANCE_NAME}_redis
     restart: "no"
-    ports:
-      - "${REDIS_PORT}:6379"
     networks:
       - hashfrog
 
+  hashfrog:
+    image: elwafo/hashfrog:latest
+    container_name: ${INSTANCE_NAME}_hashfrog
+    restart: "no"
+    ports:
+      - "${PORT}:3000"
+    networks:
+      - hashfrog
+    environment:
+      - REDIS_HOST=${INSTANCE_NAME}_redis
+
 networks:
   hashfrog:
-
-volumes:
-  hashfrogdb:
 
